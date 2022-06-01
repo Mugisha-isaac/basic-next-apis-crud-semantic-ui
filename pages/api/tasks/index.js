@@ -17,7 +17,8 @@ export default async(req,res)=>{
                 return res.status(200).json(tasks)
             }
             catch(err){
-                return res.status(400).json({message:err.message})
+                console.log(err)
+                return res.status(400).json({message: err.message})
             }
 
         default:
