@@ -10,7 +10,7 @@ export const  Navbar = ()=>{
              <Container>
                  <Menu.Item name='home'>
                     <Link href="/">
-                      <img src='react.svg' />
+                      <img src='react.svg' />   
                     </Link>        
                  </Menu.Item>
 
