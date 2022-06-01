@@ -10,6 +10,8 @@ export async function dbConnect(){
     
     const db = await connect(process.env.NEXT_PUBLIC_MONGO_URL);
     conn.isConnected = db.connections[0].readyState;
+
+    console.log(db.connection.db.databaseName);
 }
 
 connection.on("connected",()=>{
