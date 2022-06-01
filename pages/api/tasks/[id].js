@@ -47,6 +47,6 @@
                 } 
 
             default:
-                return res.status(500).json({message:'Server error'});
+                return res.status(400).json({message:'Method not supported'});
         }
     }

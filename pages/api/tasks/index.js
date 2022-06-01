@@ -33,6 +33,6 @@ export default async(req,res)=>{
             }    
 
         default:
-            return res.status(500).json({success:false, message: 'server error'})   
+            return res.status(400).json({message:'Method not supported'}); 
     }
 }
