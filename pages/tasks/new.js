@@ -17,7 +17,7 @@ const CreateTask = () => {
   const validate = ()=>{
       let errors = {};
       if(!title) errors.title = "Title is required"
-      if(!description) error.description = "Description is required"
+      if(!description) errors.description = "Description is required"
       return errors;
   }
 
@@ -67,6 +67,7 @@ const CreateTask = () => {
             ) : (
               <Form onSubmit={handleSubmit}>
                 <Form.Input
+                  error={errors.title ? {content: "please enter a title"} : null}
                   label="Title"
                   placeholder="Enter title"
                   name="title"
@@ -75,6 +76,7 @@ const CreateTask = () => {
                   autofocus
                 />
                 <Form.TextArea
+                   error={errors.description ? {content: "please enter a description"} : null}
                   label="description"
                   placeholder="Enter description"
                   name="description"
