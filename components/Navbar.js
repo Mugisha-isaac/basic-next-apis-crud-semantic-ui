@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 
-export const  Navbar = ()=>{
+ const  Navbar = ()=>{
     const router = useRouter();
      return (
         <Menu inverted borderless style={{padding:".3rem", marginBottom:"22px"}} attached>
              <Container>
                  <Menu.Item name='home'>
                     <Link href="/">
-                      <img src='react.svg' />   
+                      <img src='https://flow-e.com/wp-content/uploads/bfi_thumb/Google-task-list-379tmv50jkyo35v5zqpoui.png' style={{width:'100px', height:'100px', objectFit:'cover', borderRadius:'50%'}} />   
                     </Link>        
                  </Menu.Item>
 
@@ -23,3 +23,5 @@ export const  Navbar = ()=>{
         </Menu>
      )
 }
+
+export default Navbar;

@@ -1,9 +1,10 @@
 import 'semantic-ui-css/semantic.min.css'
-import { Layout } from '../components/Layout'
+import  Layout  from '../components/Layout'
 
 
 function MyApp({ Component, pageProps }) {
-  return (
+  return(
+    // <Component {...pageProps} />
     <Layout>
       <Component {...pageProps} />
     </Layout>
