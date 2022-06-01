@@ -23,7 +23,7 @@ export default function Home({tasks=[]}) {
 
   return (
     <div>
-      <Container>
+      <Container style={{marginTop:'6rem'}}>
         <Card.Group itemsPerRow={4}>
          {tasks && tasks.map((task)=>(
            <Card key={task._id}>
