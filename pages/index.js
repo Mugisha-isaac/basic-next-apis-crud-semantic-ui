@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 
 export default function Home({tasks=[]}) {
+
+  const router = useRouter();
   if(tasks.length === 0){
     return (
       <Grid centered verticalAlign='middle' columns="1" style={{height:"80vh"}} >
