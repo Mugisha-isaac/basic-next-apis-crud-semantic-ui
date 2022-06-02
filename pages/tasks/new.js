@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Grid, Loader } from "semantic-ui-react";
 import { useRouter } from "next/router";
 
@@ -10,9 +10,16 @@ const CreateTask = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const { push } = useRouter();
+  const { push, query } = useRouter();
 
   const { title, description } = newTask;
+
+  const getTask = async()=>{
+      const response = await fetch(`http://localhost:3000/api/tasks/${query.id}`);
+      const data = await response.json();
+      console.log("data...", data)
+      setNewTask({title:data.data.title,description:data.data.description})
+  }
 
   const validate = ()=>{
       let errors = {};
@@ -26,9 +33,31 @@ const CreateTask = () => {
     let errors = validate()
     if(Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
-    await createTask();
+    if(query.id){
+      await updateTask()
+    }
+    else{
+      await createTask();
+    }
+
     await push("/")
   };
+
+  const updateTask = async()=>{
+    try{
+      await fetch(`http://localhost:3000/api/tasks/${query.id}`,{
+          method:"PUT",
+          headers:{
+              "content-Type":"application/json"
+          },
+          body:JSON.stringify(newTask)   
+      })
+  }
+
+  catch(err){
+      throw new Error("Error found while creating new task ", err);
+  }
+  }
 
   const handleChange = (e) => {
       const {name,value} = e.target;
@@ -51,6 +80,11 @@ const CreateTask = () => {
       }
   }
 
+
+  useEffect(()=>{
+       if(query.id) getTask();
+  },[query.id])
+
   return (
     <Grid
       centered
@@ -61,7 +95,7 @@ const CreateTask = () => {
       <Grid.Row>
         <Grid.Column textAlign="center">
           <div>
-            <h1>Create Task</h1>
+            <h1>{query.id ? "Update Task" : "Create Task"}</h1>
             {isSubmit ? (
               <Loader active inline="centered" />
             ) : (
@@ -85,7 +119,9 @@ const CreateTask = () => {
                   autofocus
                 />
 
-                <Button type="submit" primary> Submit</Button>
+                <Button type="submit" primary> 
+                   {query.id ? "Update" : "Submit"}
+                </Button>
               </Form>
             )}
           </div>
