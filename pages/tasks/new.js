@@ -14,76 +14,75 @@ const CreateTask = () => {
 
   const { title, description } = newTask;
 
-  const getTask = async()=>{
-      const response = await fetch(`http://localhost:3000/api/tasks/${query.id}`);
-      const data = await response.json();
-      console.log("data...", data)
-      setNewTask({title:data.data.title,description:data.data.description})
+  const getTask = async () => {
+    const response = await fetch(`http://localhost:3000/api/tasks/${query.id}`);
+    const data = await response.json();
+    setNewTask({ title: data.data.title, description: data.data.description })
   }
 
-  const validate = ()=>{
-      let errors = {};
-      if(!title) errors.title = "Title is required"
-      if(!description) errors.description = "Description is required"
-      return errors;
+  const validate = () => {
+    let errors = {};
+    if (!title) errors.title = "Title is required"
+    if (!description) errors.description = "Description is required"
+    return errors;
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let errors = validate()
-    if(Object.keys(errors).length) return setErrors(errors);
+    if (Object.keys(errors).length) return setErrors(errors);
     setIsSubmit(true);
-    if(query.id){
+    if (query.id) {
       await updateTask()
     }
-    else{
+    else {
       await createTask();
     }
 
     await push("/")
   };
 
-  const updateTask = async()=>{
-    try{
-      await fetch(`http://localhost:3000/api/tasks/${query.id}`,{
-          method:"PUT",
-          headers:{
-              "content-Type":"application/json"
-          },
-          body:JSON.stringify(newTask)   
+  const updateTask = async () => {
+    try {
+      await fetch(`http://localhost:3000/api/tasks/${query.id}`, {
+        method: "PUT",
+        headers: {
+          "content-Type": "application/json"
+        },
+        body: JSON.stringify(newTask)
       })
-  }
+    }
 
-  catch(err){
+    catch (err) {
       throw new Error("Error found while creating new task ", err);
-  }
+    }
   }
 
   const handleChange = (e) => {
-      const {name,value} = e.target;
-      setNewTask({...newTask,[name]:value});
+    const { name, value } = e.target;
+    setNewTask({ ...newTask, [name]: value });
   };
 
-  const createTask = async()=>{
-      try{
-          await fetch("http://localhost:3000/api/tasks",{
-              method:"POST",
-              headers:{
-                  "content-Type":"application/json"
-              },
-              body:JSON.stringify(newTask)   
-          })
-      }
+  const createTask = async () => {
+    try {
+      await fetch("http://localhost:3000/api/tasks", {
+        method: "POST",
+        headers: {
+          "content-Type": "application/json"
+        },
+        body: JSON.stringify(newTask)
+      })
+    }
 
-      catch(err){
-          throw new Error("Error found while creating new task ", err);
-      }
+    catch (err) {
+      throw new Error("Error found while creating new task ", err);
+    }
   }
 
 
-  useEffect(()=>{
-       if(query.id) getTask();
-  },[query.id])
+  useEffect(() => {
+    if (query.id) getTask();
+  }, [query.id])
 
   return (
     <Grid
@@ -101,7 +100,7 @@ const CreateTask = () => {
             ) : (
               <Form onSubmit={handleSubmit}>
                 <Form.Input
-                  error={errors.title ? {content: "please enter a title"} : null}
+                  error={errors.title ? { content: "please enter a title" } : null}
                   label="Title"
                   placeholder="Enter title"
                   name="title"
@@ -110,7 +109,7 @@ const CreateTask = () => {
                   autofocus
                 />
                 <Form.TextArea
-                   error={errors.description ? {content: "please enter a description"} : null}
+                  error={errors.description ? { content: "please enter a description" } : null}
                   label="description"
                   placeholder="Enter description"
                   name="description"
@@ -119,8 +118,8 @@ const CreateTask = () => {
                   autofocus
                 />
 
-                <Button type="submit" primary> 
-                   {query.id ? "Update" : "Submit"}
+                <Button type="submit" primary>
+                  {query.id ? "Update" : "Submit"}
                 </Button>
               </Form>
             )}

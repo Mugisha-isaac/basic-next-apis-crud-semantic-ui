@@ -1,18 +1,18 @@
 import Head from "next/head";
-import  Navbar  from "./Navbar";
+import Navbar from "./Navbar";
 
 
-const Layout = ({children})=>{
-  return(
+const Layout = ({ children }) => {
+  return (
     <>
-    <Head>
+      <Head>
         <title>Task app</title>
-    </Head>
-    <Navbar />
-    {children}
-  </>
+      </Head>
+      <Navbar />
+      {children}
+    </>
   )
-    
+
 }
 
 export default Layout;
