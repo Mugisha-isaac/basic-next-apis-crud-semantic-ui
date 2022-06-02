@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Card, Grid } from 'semantic-ui-react';
+import { Button, Card, Confirm, Grid } from 'semantic-ui-react';
 
 
 const Task = ({task,error})=>{
@@ -29,15 +29,41 @@ const Task = ({task,error})=>{
     const open = ()=>setConfirm(true);
     const close = ()=>setConfirm(false);
 
+    const handleDelete = async()=>{
+          setISDeleting(true);
+          await deleteTask();
+         await push("/")
+          close()
+    }
+
+    if(error && error.statusCode){
+         return <Error statusCode = {error.statusCode} title={error.statusText} />
+    }
+
     return(
          <Grid centered verticalAlign='middle' columns={1} style={{height:'80vh'}}>
              <Grid.Row>
                  <Grid.Column textAlign='center'> 
                   <Card centered>
+                      <Card.Content>
                        <Card.Header>{task.data.title}</Card.Header>
+                       <Card.Description>
+                           {task.data.description}
+                       </Card.Description>
+                       </Card.Content>  
+                       <Card.Content extra>
+                         <Button color='red' onClick={open} loading={isDeleting}>Delete</Button>
+                       </Card.Content>
                   </Card>
                  </Grid.Column>
              </Grid.Row>
+             <Confirm 
+              content="Are you sure to delete this task ?"
+              header="Please confirm"
+              open={confirm}
+              onConfirm ={handleDelete}
+              onCancel = {close}
+             />
          </Grid>
     )
 }
